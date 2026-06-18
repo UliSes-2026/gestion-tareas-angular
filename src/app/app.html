@@ -1,6 +1,13 @@
-<nav>
-  <a routerLink="/">Inicio</a>
-  <a routerLink="/tareas">Tareas</a>
+<nav class="navbar">
+  <a class="logo" routerLink="/">
+    <img src="/img/logo.svg" alt="Logo">
+    <span>Gestor de tareas</span>
+  </a>
+
+  <div class="nav-links">
+    <a routerLink="/">Inicio</a>
+    <a routerLink="/tareas/crear">Tareas</a>
+  </div>
 </nav>
 
 <router-outlet></router-outlet>

@@ -1,96 +1,63 @@
-<h1>{{ title }}</h1>
+<main class="contenedor">
+  <h1>Registro de actividades</h1>
 
-<p>Angular ya está funcionando.</p>
+    <a class="boton-principal" routerLink="/tareas/crear">
+        <img src="/img/save.svg" alt="">
+        Registrar tarea
+    </a>
 
-<h2>Agregar tarea</h2>
+  <section class="tabla-registro">
 
-<div>
-  <label>
-    Nombre:
-    <input type="text" [(ngModel)]="nuevaTarea.nombre">
-  </label>
-</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Tarea</th>
+          <th>Descripción</th>
+          <th>Fecha inicio</th>
+          <th>Fecha límite</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-<div>
-  <label>
-    Tarea:
-    <input type="text" [(ngModel)]="nuevaTarea.tarea">
-  </label>
-</div>
+      <tbody>
+        @for (tarea of tareas(); track tarea.id) {
+          <tr>
+            <td>{{ tarea.nombre }}</td>
+            <td>{{ tarea.tarea }}</td>
+            <td>{{ tarea.descripcion }}</td>
+            <td>{{ tarea.fecha_inicio | date:'dd/MM/yyyy':'UTC' }}</td>
+            <td>{{ tarea.fecha_limite | date:'dd/MM/yyyy':'UTC' }}</td>
+            <td>
+              <button
+                class="estado-boton"
+                [class.completada]="tarea.completada"
+                [class.pendiente]="!tarea.completada"
+                (click)="cambiarEstado(tarea.id)"
+              >
+                {{ tarea.completada ? 'Completada' : 'Pendiente' }}
+              </button>
+            </td>
+            <td>
+              <div class="acciones-tabla">
+                <button class="eliminar" (click)="eliminarTarea(tarea.id)">
+                  <img src="/img/basura.svg" alt="">
+                  Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
 
-<div>
-  <label>
-    Descripción:
-    <textarea [(ngModel)]="nuevaTarea.descripcion"></textarea>
-  </label>
-</div>
-
-<div>
-  <label>
-    Fecha inicio:
-    <input type="date" [(ngModel)]="nuevaTarea.fecha_inicio">
-  </label>
-</div>
-
-<div>
-  <label>
-    Fecha límite:
-    <input type="date" [(ngModel)]="nuevaTarea.fecha_limite">
-  </label>
-</div>
-
-<button (click)="agregarTarea()">
-  Agregar tarea
-</button>
-
-
-<h2>Lista de tareas</h2>
-
-@if (mensaje) {
-  <p>{{ mensaje }}</p>
-}
-
-<table border="1">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nombre</th>
-      <th>Tarea</th>
-      <th>Descripción</th>
-      <th>Fecha inicio</th>
-      <th>Fecha límite</th>
-      <th>Estado</th>
-      <th>Acción</th>
-      
-    </tr>
-  </thead>
-
-  <tbody>
-    @for (tarea of tareas(); track tarea.id) {
-      <tr>
-        <td>{{ tarea.id }}</td>
-        <td>{{ tarea.nombre }}</td>
-        <td>{{ tarea.tarea }}</td>
-        <td>{{ tarea.descripcion }}</td>
-        <td>{{ tarea.fecha_inicio }}</td>
-        <td>{{ tarea.fecha_limite }}</td>
-        <td>
-          @if (tarea.completada) {
-            Completada
-          } @else {
-            Pendiente
-          }
-        </td>
-        <td>
-          <button (click)="cambiarEstado(tarea.id)">
-            Cambiar estado
-          </button>
-
-          <button (click)="eliminarTarea(tarea.id)">
-            Eliminar
-          </button>
-        </td>
-      </tr>
-    }
-  </tbody>
-</table>
+        @empty {
+            <tr>
+                <td colspan="7">
+                No hay tareas registradas.
+                </td>
+            </tr>
+            }
+      </tbody>
+    </table>
+  </section>
+</main>

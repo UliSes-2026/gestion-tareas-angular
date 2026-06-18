@@ -1,0 +1,77 @@
+<main class="contenedor">
+  <h1>Registro de tareas</h1>
+
+  <form class="formulario" (ngSubmit)="agregarTarea()">
+    <div>
+      <label for="nombre">Ingresa tu nombre</label>
+      <input
+        id="nombre"
+        name="nombre"
+        type="text"
+        placeholder="Escribe tu nombre"
+        [(ngModel)]="nuevaTarea.nombre"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="fecha_inicio">Fecha de inicio</label>
+      <input
+        id="fecha_inicio"
+        name="fecha_inicio"
+        type="date"
+        [(ngModel)]="nuevaTarea.fecha_inicio"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="tarea">Ingresa la tarea</label>
+      <input
+        id="tarea"
+        name="tarea"
+        type="text"
+        placeholder="Escribe la tarea"
+        [(ngModel)]="nuevaTarea.tarea"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="fecha_limite">Fecha límite</label>
+      <input
+        id="fecha_limite"
+        name="fecha_limite"
+        type="date"
+        [(ngModel)]="nuevaTarea.fecha_limite"
+        required
+      >
+    </div>
+
+    <div class="campo-descripcion">
+      <label for="descripcion">Descripción de la tarea</label>
+      <textarea
+        id="descripcion"
+        name="descripcion"
+        placeholder="Escribe la descripción"
+        [(ngModel)]="nuevaTarea.descripcion"
+      ></textarea>
+    </div>
+
+    @if (mensaje) {
+      <p class="mensaje">{{ mensaje }}</p>
+    }
+
+    <div class="acciones">
+      <button type="submit">
+        <img src="/img/save.svg" alt="">
+        Registrar tarea
+      </button>
+
+      <a routerLink="/tareas">
+        <img src="/img/list.svg" alt="">
+        Ver tareas
+      </a>
+    </div>
+  </form>
+</main>

@@ -1,25 +1,16 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Tareas as TareasService } from '../services/tareas';
 
 @Component({
   selector: 'app-tareas',
-  imports: [FormsModule],
+  imports: [RouterLink, DatePipe],
   templateUrl: './tareas.html',
   styleUrl: './tareas.css'
 })
 export class Tareas implements OnInit {
   title = 'Gestión de tareas';
-
-  mensaje = '';
-
-  nuevaTarea = {
-    nombre: '',
-    tarea: '',
-    descripcion: '',
-    fecha_inicio: '',
-    fecha_limite: ''
-  };
 
   tareas = signal<any[]>([]);
 
@@ -36,41 +27,6 @@ export class Tareas implements OnInit {
       },
       error: (error) => {
         console.log('Error al cargar tareas', error);
-      }
-    });
-  }
-
-  agregarTarea() {
-    if (
-      this.nuevaTarea.nombre.trim() === '' ||
-      this.nuevaTarea.tarea.trim() === '' ||
-      this.nuevaTarea.fecha_inicio === '' ||
-      this.nuevaTarea.fecha_limite === ''
-    ) {
-      return;
-    }
-
-    const nueva = {
-      ...this.nuevaTarea,
-      completada: false
-    };
-
-    this.tareasService.crear(nueva).subscribe({
-      next: (respuesta) => {
-        this.tareas.update((tareas) => [respuesta, ...tareas]);
-        this.mensaje = 'Tarea creada correctamente';
-
-        this.nuevaTarea = {
-          nombre: '',
-          tarea: '',
-          descripcion: '',
-          fecha_inicio: '',
-          fecha_limite: ''
-        };
-      },
-      error: (error) => {
-        console.log('Error al crear tarea', error);
-        this.mensaje = 'Error al crear tarea';
       }
     });
   }
